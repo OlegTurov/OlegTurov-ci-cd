@@ -5,6 +5,7 @@ from pydantic import BaseModel
 import joblib
 import pandas as pd
 
+
 class PhysicalFeatures(BaseModel):
     KinEng: float
     PotEng: float
@@ -15,6 +16,7 @@ class PhysicalFeatures(BaseModel):
 app = FastAPI(title="Physical Predictor")
 
 model = joblib.load("models/model.joblib")
+
 
 @app.post("/predict")
 def predict(data: PhysicalFeatures):
