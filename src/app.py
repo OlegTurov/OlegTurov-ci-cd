@@ -29,14 +29,12 @@ def predict(data: PhysicalFeatures):
             status_code=500,
             detail=f"Preprocessing error: {e}")
 
-    X_aligned = X.reindex(columns=model.feature_names_in_, fill_value=0)
-
     try:
-        pred = model.predict(X_aligned)[0]
+        pred = model.predict(X)[0]
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Inference error: {e}")
 
-    return {"survived": bool(pred)}
+    return {"Кинетическая энергия": pred}
 
 
 @app.get("/report")
