@@ -1,6 +1,5 @@
 import os
 import joblib
-import pandas as pd
 from datetime import datetime
 from src.data_loader import load_sample_data
 
