@@ -27,4 +27,6 @@ def load_and_preprocess(path: str):
 
 def load_sample_data(path: str, test_size=0.2, random_state=42):
     X, y = load_and_preprocess(path)
-    return train_test_split(X, y, test_size=test_size, random_state=random_state)
+    return train_test_split(
+        X, y, test_size=test_size, random_state=random_state
+    )
