@@ -20,9 +20,9 @@ if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"Модель не найдена: {MODEL_PATH}")
 model = joblib.load(MODEL_PATH)
 
-raw_data = pd.read_csv(CSV_URL).head(5)
-print(raw_data)
+raw_data = pd.read_csv(CSV_URL)
 X, _ = preprocess_data(raw_data)
+X = X.head(5)
 X = X.reindex(columns=model.feature_names_in_, fill_value=0)
 
 preds = model.predict(X)
