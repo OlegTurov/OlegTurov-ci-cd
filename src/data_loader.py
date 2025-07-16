@@ -3,7 +3,7 @@ from sklearn.model_selection import train_test_split
 
 
 def load_data(path: str):
-    return pd.read_csv(path, delim_whitespace=True)
+    return pd.read_csv(path, sep=r'\s+')
 
 
 def preprocess_data(df: pd.DataFrame):

@@ -1,6 +1,7 @@
 import os
 import joblib
-from sklearn.linear_model import LogisticRegression
+
+from sklearn.linear_model import LinearRegression
 from sklearn.metrics import accuracy_score
 from src.data_loader import load_sample_data
 
@@ -19,7 +20,9 @@ os.makedirs(MODEL_DIR, exist_ok=True)
 
 X_train, X_test, y_train, y_test = load_sample_data(CSV_URL)
 
-model = LogisticRegression(max_iter=1000)
+model = LinearRegression(
+    copy_X=True
+)
 model.fit(X_train, y_train)
 
 y_pred = model.predict(X_test)
