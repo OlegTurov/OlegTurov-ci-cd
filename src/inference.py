@@ -2,7 +2,7 @@ import os
 import joblib
 import pandas as pd
 from datetime import datetime
-from src.data_loader import preprocess_data
+from src.data_loader import load_sample_data
 
 
 MODEL_PATH = os.path.join(
@@ -20,15 +20,14 @@ if not os.path.exists(MODEL_PATH):
     raise FileNotFoundError(f"Модель не найдена: {MODEL_PATH}")
 model = joblib.load(MODEL_PATH)
 
-raw_data = pd.read_csv(CSV_URL)
-print(raw_data.columns)
-X, _ = preprocess_data(raw_data)
+
+X, _ = load_sample_data(CSV_URL)
 X = X.head(5)
 X = X.reindex(columns=model.feature_names_in_, fill_value=0)
 
 preds = model.predict(X)
-raw_data['Predicted'] = preds
-raw_data.to_csv(PRED_PATH, index=False)
+X['Predicted'] = preds
+X.to_csv(PRED_PATH, index=False)
 print(f"✅ Предсказания сохранены в {PRED_PATH}")
 
 html = f"""
@@ -43,7 +42,7 @@ html = f"""
     <p><strong>Дата:</strong>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>
     <p><strong>Количество шагов:</strong> {len(preds)}</p>
     <p><strong>Предсказания:</strong></p>
-    {raw_data[['Predicted']].to_html(index=False)}
+    {X[['Predicted']].to_html(index=False)}
 </body>
 </html>
 """
