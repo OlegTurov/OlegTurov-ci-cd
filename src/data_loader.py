@@ -30,3 +30,6 @@ def load_sample_data(path: str, test_size=0.2, random_state=42):
     return train_test_split(
         X, y, test_size=test_size, random_state=random_state
     )
+
+def process_data_to_inference(path: str):
+    return load_sample_data(path)[0]
