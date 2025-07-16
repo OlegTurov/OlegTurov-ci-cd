@@ -21,8 +21,8 @@ if not os.path.exists(MODEL_PATH):
 model = joblib.load(MODEL_PATH)
 
 raw_data = pd.read_csv(CSV_URL)
+print(raw_data.columns)
 X, _ = preprocess_data(raw_data)
-print(X.columns)
 X = X.head(5)
 X = X.reindex(columns=model.feature_names_in_, fill_value=0)
 
