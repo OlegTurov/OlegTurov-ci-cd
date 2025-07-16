@@ -59,31 +59,31 @@ jobs:
             predictions.csv
             report.html
 
-#  publish:
-#    name: Build & Push Docker image to GHCR
-#    runs-on: ubuntu-latest
-#    needs: build
-#    steps:
-#      - name: 🔄 Checkout репозитория
-#        uses: actions/checkout@v3
-#
-#      - name: 📥 Download model artifact
-#        uses: actions/download-artifact@v4
-#        with:
-#          name: model
-#          path: models
-#
-#      - name: Log in to GitHub Container Registry
-#        uses: docker/login-action@v2
-#        with:
-#          registry: ghcr.io
-#          username: ${{ github.actor }}
-#          password: ${{ secrets.GITHUB_TOKEN }}
-#
-#      - name: Build and push Docker image
-#        uses: docker/build-push-action@v4
-#        with:
-#          context: .
-#          push: true
-#          tags: ghcr.io/karen9955/titanic-api:latest
+  publish:
+    name: Build & Push Docker image to GHCR
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: 🔄 Checkout репозитория
+        uses: actions/checkout@v3
+
+      - name: 📥 Download model artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: model
+          path: models
+
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/OlegTurov/OlegTurov-ci-cd:latest
 
