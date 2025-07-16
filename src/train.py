@@ -6,6 +6,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 
 from src.data_loader import load_sample_data
 
+
 GOOGLE_DRIVE_FILE_ID = '1mZFlDYnk_MJkwdeia86GUXM6ZRU-H-C5'
 CSV_URL = f'https://drive.google.com/uc?id={GOOGLE_DRIVE_FILE_ID}'
 
