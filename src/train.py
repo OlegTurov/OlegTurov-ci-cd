@@ -31,6 +31,3 @@ joblib.dump(model, MODEL_PATH)
 print(f'✅ Model saved to {MODEL_PATH}')
 
 print(model.feature_names_in_)
-
-
-
