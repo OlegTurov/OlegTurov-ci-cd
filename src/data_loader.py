@@ -32,5 +32,6 @@ def load_sample_data(path: str, test_size=0.2, random_state=42):
     )
 
 
-def process_data_to_inference(path: str):
-    return load_sample_data(path)[0]
+def get_sample_features(path: str, n: int = 5):
+    X, _ = load_and_preprocess(path)
+    return X.head(n)

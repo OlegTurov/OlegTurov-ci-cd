@@ -1,7 +1,7 @@
 import os
 import joblib
 from datetime import datetime
-from src.data_loader import process_data_to_inference
+from src.data_loader import get_sample_features
 
 
 MODEL_PATH = os.path.join(
@@ -20,7 +20,7 @@ if not os.path.exists(MODEL_PATH):
 model = joblib.load(MODEL_PATH)
 
 
-X, _ = process_data_to_inference(CSV_URL)
+X, _ = get_sample_features(CSV_URL)
 X = X.head(5)
 X = X.reindex(columns=model.feature_names_in_, fill_value=0)
 
