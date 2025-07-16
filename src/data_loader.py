@@ -15,10 +15,10 @@ def preprocess_data(df: pd.DataFrame):
     df['KinEng'] = df['KinEng'].astype(float)
 
     X = df[['PotEng', 'Volume']]
-
     y = df['KinEng']
 
     return X, y
+
 
 def load_and_preprocess(path: str):
     df = load_data(path)
