@@ -4,6 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from src.data_loader import load_sample_data
 
+
 GOOGLE_DRIVE_FILE_ID = (
     '1mZFlDYnk_MJkwdeia86GUXM6ZRU-H-C5'
 )
