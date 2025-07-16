@@ -8,9 +8,11 @@ from src.data_loader import preprocess_data
 MODEL_PATH = os.path.join(
     os.path.dirname(__file__),
     '..', 'models', 'model.joblib')
+
 CSV_URL = (
     'https://drive.google.com/uc?id=1mZFlDYnk_MJkwdeia86GUXM6ZRU-H-C5'
 )
+
 PRED_PATH = 'predictions.csv'
 REPORT_PATH = 'report.html'
 
@@ -19,6 +21,7 @@ if not os.path.exists(MODEL_PATH):
 model = joblib.load(MODEL_PATH)
 
 raw_data = pd.read_csv(CSV_URL).head(5)
+print(raw_data)
 X, _ = preprocess_data(raw_data)
 X = X.reindex(columns=model.feature_names_in_, fill_value=0)
 
