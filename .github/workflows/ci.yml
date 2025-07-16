@@ -85,5 +85,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/OlegTurov/OlegTurov-ci-cd:latest
+          tags: ghcr.io/OlegTurov/oleg-turov-ci-cd:latest
 
