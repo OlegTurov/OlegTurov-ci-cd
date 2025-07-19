@@ -118,7 +118,6 @@ jobs:
             --container-name ml-api \
             --image ghcr.io/olegturov/olegturov-ci-cd:latest \
             --cores 1 \
-            --memory 512Mb \
             --concurrency 4 \
             --execution-timeout 30s \
             --service-account-id "${{ secrets.YC_SA_ID }}"
