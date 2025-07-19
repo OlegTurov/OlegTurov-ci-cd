@@ -101,61 +101,28 @@ jobs:
 
       - name: 🔐 Configure YC CLI
         run: |
-          # Декодируем и сохраняем ключ сервисного аккаунта
           echo "${{ secrets.YC_SA_KEY_BASE64 }}" | base64 -d > sa-key.json
-          
-          # Настраиваем CLI
           yc config set service-account-key sa-key.json
           yc config set cloud-id "${{ secrets.YC_CLOUD_ID }}"
           yc config set folder-id "${{ secrets.YC_FOLDER_ID }}"
-          
-          # Проверяем настройки
           yc config list
-          
-          # Проверяем доступность сервисного аккаунта
-          yc iam service-account get "${{ secrets.YC_SA_ID }}"
 
       - name: 🛠 Create container (if not exists)
         run: |
-          # Создаем контейнер если его нет
-          if ! yc serverless container get --name ml-api; then
-            yc serverless container create --name ml-api
-            echo "Container created"
-          else
-            echo "Container already exists"
-          fi
-
-      - name: 🔑 Check permissions
-        run: |
-          # Проверяем права сервисного аккаунта
-          yc resource-manager folder list-access-bindings "${{ secrets.YC_FOLDER_ID }}" \
-            | grep "${{ secrets.YC_SA_ID }}" || \
-            echo "WARNING: Service account might not have required permissions"
+          yc serverless container get --name ml-api || \
+          yc serverless container create --name ml-api
 
       - name: 🚀 Deploy container revision
         run: |
-          set -e  # Прерывать при ошибке
-          
-          # Деплой ревизии контейнера
           yc serverless container revision deploy \
             --container-name ml-api \
             --image ghcr.io/olegturov/olegturov-ci-cd:latest \
             --cores 1 \
             --concurrency 4 \
             --execution-timeout 30s \
-            --service-account-id "${{ secrets.YC_SA_ID }}" \
-            --description "Deployed via GitHub Actions $(date +'%Y-%m-%d %H:%M')"
-          
-          echo "✅ Deployment successful"
+            --service-account-id "${{ secrets.YC_SA_ID }}"
 
-      - name: 🌍 Make container public (if needed)
+      - name: 🌍 Make container public (first time only)
         run: |
-          # Разрешаем публичные вызовы (если требуется)
-          yc serverless container allow-unauthenticated-invocation ml-api --no-user-output || \
-            echo "⚠️ Failed to make container public (might already be public)"
-
-      - name: 📋 Verify deployment
-        run: |
-          # Проверяем состояние деплоя
-          yc serverless container revision list --container-name ml-api --limit 1
+          yc serverless container allow-unauthenticated-invocation ml-api || true
   
