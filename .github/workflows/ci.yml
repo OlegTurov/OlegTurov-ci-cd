@@ -92,24 +92,27 @@ jobs:
     runs-on: ubuntu-latest
     needs: publish
     steps:
-      - name: Install YC CLI
+      - name: ⬇️ Install YC CLI
         run: |
           curl -sSL https://storage.yandexcloud.net/yandexcloud-yc/install.sh | bash
           echo "$HOME/yandex-cloud/bin" >> $GITHUB_PATH
+          export PATH="$HOME/yandex-cloud/bin:$PATH"
+          yc --version
 
-      - name: Configure YC CLI
+      - name: 🔐 Configure YC CLI
         run: |
           echo "${{ secrets.YC_SA_KEY }}" > sa-key.json
           yc config set service-account-key sa-key.json
-          yc config set cloud-id ${{ secrets.YC_CLOUD_ID }}
-          yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
+          yc config set cloud-id "${{ secrets.YC_CLOUD_ID }}"
+          yc config set folder-id "${{ secrets.YC_FOLDER_ID }}"
+          yc config list
 
-      - name: Create container (if not exists)
+      - name: 🛠 Create container (if not exists)
         run: |
           yc serverless container get --name ml-api || \
           yc serverless container create --name ml-api
 
-      - name: Deploy container revision
+      - name: 🚀 Deploy container revision
         run: |
           yc serverless container revision deploy \
             --container-name ml-api \
@@ -118,8 +121,9 @@ jobs:
             --memory 512Mb \
             --concurrency 4 \
             --execution-timeout 30s \
-            --service-account-id ${{ secrets.YC_SA_ID }}
+            --service-account-id "${{ secrets.YC_SA_ID }}"
 
-      - name: Make container public (1st time only)
+      - name: 🌍 Make container public (first time only)
         run: |
           yc serverless container allow-unauthenticated-invocation ml-api || true
+  
