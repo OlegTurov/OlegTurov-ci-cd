@@ -99,6 +99,9 @@ jobs:
           export PATH="$HOME/yandex-cloud/bin:$PATH"
           yc --version
 
+      - name: Проверка наличия SA
+        run: yc iam service-account get ${{ secrets.YC_SA_ID }}
+
       - name: 🔐 Configure YC CLI
         run: |
           echo "${{ secrets.YC_SA_KEY_BASE64 }}" | base64 -d > sa-key.json
