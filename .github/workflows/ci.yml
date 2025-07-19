@@ -107,7 +107,7 @@ jobs:
           yc config set folder-id "${{ secrets.YC_FOLDER_ID }}"
           yc config list
 
-      - name: 🧪 Debug: extract SA ID from key
+      - name: 🧪 Debug extract SA ID from key
         run: |
           cat sa-key.json | grep service_account_id
 
