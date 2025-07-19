@@ -105,15 +105,6 @@ jobs:
           yc config set service-account-key sa-key.json
           yc config set cloud-id "${{ secrets.YC_CLOUD_ID }}"
           yc config set folder-id "${{ secrets.YC_FOLDER_ID }}"
-          yc config list
-
-      - name: 🧪 Debug extract SA ID from key
-        run: |
-          cat sa-key.json | grep service_account_id
-
-
-      - name: 🔎 Проверка наличия SA
-        run: yc iam service-account get ${{ secrets.YC_SA_ID }}
 
       - name: 🛠 Create container (if not exists)
         run: |
