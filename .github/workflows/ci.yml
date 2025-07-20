@@ -135,7 +135,7 @@ jobs:
 
       - name: 🌍 Make container public (first time only)
         run: |
-          yc serverless container allow-unauthenticated-invocation ml-api || true
+          yc serverless container allow-unauthenticated-invoke ml-api || true
   
   
   
